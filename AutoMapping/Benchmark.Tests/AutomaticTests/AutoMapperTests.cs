@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Benchmarks.SimpleObjects;
+using Benchmarks.AutoMapper;
 using Xunit;
 
 namespace Benchmarks.Tests.AutomaticTests
@@ -9,13 +9,12 @@ namespace Benchmarks.Tests.AutomaticTests
         [Fact]
         public void AutoMapperConfigurationIsCorrect()
         {
-            bool result;
+            var result = true;
 
             try
             {
-                new SimpleObjectBenchmarks();
+                AutoMappingConfigurator.Configure();
                 Mapper.AssertConfigurationIsValid();
-                result = true;
             }
             catch 
             {

@@ -10,7 +10,7 @@ namespace Benchmarks
 
         protected static void Main(string[] args)
         {
-            BenchmarkRunner.Run<SimpleObjectBenchmarks>();
+            BenchmarkRunner.Run<SimpleObjects.Benchmarks>();
     
             Console.WriteLine("Tests Complete!");
             Console.ReadKey();

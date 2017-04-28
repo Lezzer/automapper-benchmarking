@@ -1,48 +1,50 @@
-﻿using AutoMapper;
+﻿using Benchmarks.AutoMapper;
 using Benchmarks.SimpleObjects;
 using Xunit;
 
 namespace Benchmarks.Tests.ManualTests.SimpleTests
 {
-    public class SimpleTests
+    public class WithoutAutoMapper
     {
-        private SourceObject _source;
-        private DestinationObject _destination;
+        internal SourceObject Source;
+        internal DestinationObject Destination;
 
-        public SimpleTests()
+        public WithoutAutoMapper()
         {
-            _source = new SourceObject
+            AutoMappingConfigurator.Configure();
+
+            Source = new SourceObject
             {
                 Id = 123,
                 Description = "This is the Source object",
                 UnusualMapping = "This is the value of UnusualMapping"
             };
 
-            _destination = Mapper.Map<DestinationObject>(_source);
+            Destination = Mappers.MapManually(Source);
         }
 
-        ~SimpleTests()
+        ~WithoutAutoMapper()
         {
-            _source = null;
-            _destination = null;
+            Source = null;
+            Destination = null;
         }
         
         [Fact]
         public void FieldMappedCorrectly_Id()
         {
-            Assert.Equal(_source.Id, _destination.Id);
+            Assert.Equal(Source.Id, Destination.Id);
         }
 
         [Fact]
         public void FieldMappedCorrectly_Description()
         {
-            Assert.Equal(_source.Description, _destination.Description);
+            Assert.Equal(Source.Description, Destination.Description);
         }
 
         [Fact]
         public void FieldMappedCorrectly_UnusualMapping_MappedUnusually()
         {
-            Assert.Equal(_source.UnusualMapping, _destination.MappedUnusually);
+            Assert.Equal(Source.UnusualMapping, Destination.MappedUnusually);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Benchmarks.SimpleObjects;
 
 namespace Benchmarks.AutoMapper
 {
@@ -12,9 +11,23 @@ namespace Benchmarks.AutoMapper
 
         private static void Config(IMapperConfigurationExpression config)
         {
+            AddSimpleObjectsMap(config);
+
+            AddComplexObjectsMap(config);
+        }
+
+        private static void AddSimpleObjectsMap(IProfileExpression config)
+        {
             config
-                .CreateMap<SourceObject, DestinationObject>()
+                .CreateMap<SimpleObjects.SourceObject, SimpleObjects.DestinationObject>()
                 .ForMember(d => d.MappedUnusually, d => d.MapFrom(s => s.UnusualMapping));
+        }
+
+        private static void AddComplexObjectsMap(IProfileExpression config)
+        {
+            config
+                .CreateMap<ComplexObjects.SourceObject, ComplexObjects.DestinationObject>()
+                .ForMember(d => d.DestinationDescription, d => d.MapFrom(s => s.Description));
         }
     }
 }
