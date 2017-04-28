@@ -1,5 +1,6 @@
-﻿using Benchmarks.AutoMapper;
-using Benchmarks.SimpleObjects;
+﻿using System.Collections.Generic;
+using Benchmarks.AutoMapper;
+using Benchmarks.ComplexObjects;
 using Xunit;
 
 namespace Benchmarks.Tests.ManualTests.ComplexTests
@@ -15,9 +16,21 @@ namespace Benchmarks.Tests.ManualTests.ComplexTests
 
             Source = new SourceObject
             {
-                Id = 123,
-                Description = "This is the Source object",
-                UnusualMapping = "This is the value of UnusualMapping"
+                Id = 456,
+                Description = "The Source object",
+                CustomTypes = new List<SimpleCustomType>()
+                {
+                    new SimpleCustomType
+                    {
+                        Id = 321,
+                        Description = "A string"
+                    },
+                    new SimpleCustomType
+                    {
+                        Id = 212,
+                        Description = "I was in the 212"
+                    }
+                }
             };
 
             Destination = Mappers.MapManually(Source);
@@ -28,7 +41,7 @@ namespace Benchmarks.Tests.ManualTests.ComplexTests
             Source = null;
             Destination = null;
         }
-        
+
         [Fact]
         public void FieldMappedCorrectly_Id()
         {
@@ -38,13 +51,13 @@ namespace Benchmarks.Tests.ManualTests.ComplexTests
         [Fact]
         public void FieldMappedCorrectly_Description()
         {
-            Assert.Equal(Source.Description, Destination.Description);
+            Assert.Equal(Source.Description, Destination.DestinationDescription);
         }
 
         [Fact]
-        public void FieldMappedCorrectly_UnusualMapping_MappedUnusually()
+        public void ArrayMappedCorrectly_CustomTypes_DestinationCustomTypes()
         {
-            Assert.Equal(Source.UnusualMapping, Destination.MappedUnusually);
+            Assert.Equal(Source.CustomTypes, Destination.DestinationCustomTypes);
         }
     }
 }

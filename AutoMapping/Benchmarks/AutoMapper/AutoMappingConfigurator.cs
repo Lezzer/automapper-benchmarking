@@ -1,7 +1,9 @@
-﻿using AutoMapper;
+﻿using System.Diagnostics.CodeAnalysis;
+using AutoMapper;
 
 namespace Benchmarks.AutoMapper
 {
+    [SuppressMessage("ReSharper", "MethodTooLong")]
     public static class AutoMappingConfigurator
     {
         public static void Configure()
@@ -27,7 +29,8 @@ namespace Benchmarks.AutoMapper
         {
             config
                 .CreateMap<ComplexObjects.SourceObject, ComplexObjects.DestinationObject>()
-                .ForMember(d => d.DestinationDescription, d => d.MapFrom(s => s.Description));
+                .ForMember(d => d.DestinationDescription, d => d.MapFrom(s => s.Description))
+                .ForMember(d => d.DestinationCustomTypes, d => d.MapFrom(s => s.CustomTypes));
         }
     }
 }
